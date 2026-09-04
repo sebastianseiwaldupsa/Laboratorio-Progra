@@ -1,0 +1,51 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    float monto;
+    float porcentaje = 0;
+    float descuento = 0;
+    float totalPagar = 0;
+
+    // Entrada de datos
+    cout << "Ingrese el monto total de la compra (Bs): ";
+    cin >> monto;
+
+    // Evaluacion de condiciones con if y else
+    if (monto <= 100) {
+        porcentaje = 0.0;
+        cout << "\n--- RESUMEN DE VENTA ---" << endl;
+        cout << "Categoria: Sin descuento" << endl;
+    } 
+    else if (monto > 100 && monto <= 500) {
+        porcentaje = 0.05; // 5%
+        cout << "\n--- RESUMEN DE VENTA ---" << endl;
+        cout << "Categoria: Descuento Bronce (5%)" << endl;
+    } 
+    else if (monto > 500 && monto <= 1000) {
+        porcentaje = 0.10; // 10%
+        cout << "\n--- RESUMEN DE VENTA ---" << endl;
+        cout << "Categoria: Descuento Plata (10%)" << endl;
+    } 
+    else if (monto > 1000) {
+        porcentaje = 0.15; // 15%
+        cout << "\n--- RESUMEN DE VENTA ---" << endl;
+        cout << "Categoria: Descuento Oro (15%)" << endl;
+    } 
+    else {
+        cout << "El monto ingresado no es valido." << endl;
+        return 0;
+    }
+
+    // Calculos
+    descuento = monto * porcentaje;
+    totalPagar = monto - descuento;
+
+    // Salida de resultados
+    cout << "Subtotal: Bs " << monto << endl;
+    cout << "Descuento aplicado: Bs " << descuento << endl;
+    cout << "Total a pagar: Bs " << totalPagar << endl;
+
+    return 0;
+}
