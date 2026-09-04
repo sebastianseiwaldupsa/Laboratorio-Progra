@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+float consumo;
+float costoporm3 = 0;
+float montofijo = 10.0;
+float totalapagar;
+
+// Entradas de consumo
+cout << "Ingrese el consumo en metros cubicos (m3):";
+cin >> consumo;
+// Evaluacion de tarifas
+if(consumo > 0 && consumo <= 15) {
+    costoporm3 = 1.20;
+    cout<< "Categoria asignada:Consumo Minimo"<< endl;
+}
+else if(consumo > 15 && consumo <= 35) {
+        costoporm3 = 2.50;
+        cout<< "Categoria asignada: Consumo Domestico"<< endl;
+}
+else if(consumo> 35 && consumo <= 70) {
+    costoporm3 = 4.00;
+    cout<< "Categoria asignada : Consumo Comercial"<< endl;
+}
+    else if(consumo > 70) {
+        costoporm3 = 6.50;
+        cout<< "Categoria asignada : Consumo Alto/Industrial"<< endl;
+    }
+// Calculo y resultados
+totalapagar = (consumo * costoporm3) + montofijo;
+
+cout << "Monto fijo: " << montofijo<< "Bs." << endl;
+cout << "pago total a pagar:" << totalapagar << "Bs." << endl;
+return 0;
+}
