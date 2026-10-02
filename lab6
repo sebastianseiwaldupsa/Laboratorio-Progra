@@ -4,18 +4,18 @@ using namespace std;
 
 int main() {
     int N;
-    double suma = 0.0;
-
-    do {
-        cout << "Ingrese un numero entero positivo N: ";
-        cin >> N;
-    } while (N <= 0);
-
-    for (int i = 1; i <= N; i++) {
-        suma += 1.0 / i;
-    }
-
-    cout << "La suma de la serie S es: " << suma << endl;
-
-    return 0;
+    float suma = 0.0;
+ do  {
+      cout<< "Ingrese el numero entero positivo N:";
+    cin>> N;
+ } while (N<=0);
+ for (int i=1;i<=N;i++) {
+     suma+= 1.0 /   i;
+     cout<<"1/ " <<i;
+     if (i<N-1) {
+            cout<<" + " ;
+     }
+ }
+ cout<<"La suma de la serie es:"<<suma<<endl;
+ return 0;
 }
