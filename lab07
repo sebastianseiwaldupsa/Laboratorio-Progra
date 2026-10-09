@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+void leerventas(double &v1,double &v2);
+double procesarventas(double v1, double v2);
+void mostrarResultados(double total);
+
+int main() {
+    double v1,v2,total;
+    leerventas(v1,v2);
+    total= procesarventas(v1,v2);
+    mostrarResultados(total);
+    
+    return 0;
+}
+void leerventas(double &v1, double &v2) {
+    cout << "Ingrese la venta del dia 1: ";
+    cin >> v1;
+
+    cout << "Ingrese la venta del dia 2: ";
+    cin >> v2;
+}
+double procesarventas(double v1,double v2) {
+    double total;
+    total= v1+v2;
+    return total;
+}
+void mostrarResultados(double total) {
+    cout<<"Ingrese el total de ventas:" <<total<<endl;
+}
+    
