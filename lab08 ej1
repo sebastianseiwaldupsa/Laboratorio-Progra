@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+// Prototipos
+int leercantidad();
+float procesarPromedio(int cantidad);
+void mostrarResultado(float promedio);
+
+int main() {
+    int cantidad;
+    float promedio;
+
+    cantidad = leercantidad();
+    promedio = procesarPromedio(cantidad);
+    mostrarResultado(promedio);
+
+    return 0;
+}
+
+int leercantidad() {
+    int cantidad;
+
+    cout << "Ingrese la cantidad de evaluaciones: ";
+    cin >> cantidad;
+
+    while (cantidad <= 0) {
+        cout << "Ingrese una cantidad positiva: ";
+        cin >> cantidad;
+    }
+
+    return cantidad;
+}
+
+float procesarPromedio(int cantidad) {
+    float nota, suma = 0;
+
+    for (int i = 1; i <= cantidad; i++) {
+        cout << "Ingrese la nota " << i << ": ";
+        cin >> nota;
+
+        while (nota < 0 || nota > 100) {
+            cout << "Ingrese una nota entre 0 y 100: ";
+            cin >> nota;
+        }
+
+        suma = suma + nota;
+    }
+
+    return suma / cantidad;
+}
+
+void mostrarResultado(float promedio) {
+    cout << "Promedio: " << promedio << endl;
+
+    if (promedio >= 51) {
+        cout << "Estado: Aprobado" << endl;
+    } else {
+        cout << "Estado: Reprobado" << endl;
+    }
+}
