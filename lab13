@@ -1,0 +1,41 @@
+
+#include iostream
+#include string
+#include using namespace std;
+// prototipo
+void registrar(string &nombre, string &apellido1,string &apellido2);
+string unirNombre(string nombre, string apellido1,string apellido2);
+int contarCaracteres(string nombre, string apellido1,string apellido2);
+void mostrar(string completo, int cantidad);
+int main() {
+string nombre, apellido1,apellido2, completo;
+int cantidad;
+
+registrar(nombre, apellido1,apellido2);
+completo = unirNombre(nombre, apellido1,apellido2);
+cantidad = contarCaracteres(nombre, apellido1,apellido2);
+mostrar(completo, cantidad);
+
+return 0;
+}
+// funciones
+void registrar(string &nombre, string &apellido1,string &apellido2) {
+cout << "Ingrese el nombre: ";
+cin >> nombre;
+
+cout << "Ingrese el apellido1: ";
+cin >> apellido1;
+cout<<"Ingrese el apellido2: ";
+cin>> apellido2;
+}
+string unirNombre(string nombre, string apellido1,string apellido2) {
+return nombre + " " + apellido1 + "" + apellido2;
+}
+int contarCaracteres(string nombre, string apellido1,string apellido2) {
+return nombre.length() + apellido1.length() + apellido2.length();
+}
+
+void mostrar(string completo, int cantidad) {
+cout << "Nombre completo: " << completo << endl;
+cout << "Letras: " << cantidad << endl;
+}
