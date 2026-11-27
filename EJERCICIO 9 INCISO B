@@ -1,0 +1,543 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// PROTOTIPOS
+void registrarReserva(string nombres[], string apellidos[], int habitaciones[], int noches[], int &n);
+void registrarVarias(string nombres[], string apellidos[], int habitaciones[], int noches[], int &n);
+void mostrarReservas(string nombres[], string apellidos[], int habitaciones[], int noches[], int n);
+void buscarHuespedes(string nombres[], string apellidos[], int habitaciones[], int noches[], int n);
+int buscarReserva(int habitaciones[], int n, int habitacion);
+void actualizarNoches(string nombres[], string apellidos[], int habitaciones[], int noches[], int n);
+void reducirNoches(int habitaciones[], int noches[], int n);
+void ampliarReserva(string nombres[], int habitaciones[], int noches[], int n);
+void generarCodigos(string nombres[], string apellidos[], int habitaciones[], int n);
+void buscarPorApellido(string nombres[], string apellidos[], int habitaciones[], int noches[], int n);
+void corregirNombre(string nombres[], int habitaciones[], int n);
+void mostrarResumen(string nombres[], string apellidos[], int habitaciones[], int noches[], int n);
+
+int main() {
+
+    string nombres[20];
+    string apellidos[20];
+    int habitaciones[20];
+    int noches[20];
+
+    int n = 0;
+    int opcion;
+
+    do {
+
+        cout << endl;
+        cout << "===== HOTEL =====" << endl;
+        cout << "1. Registrar una reserva" << endl;
+        cout << "2. Registrar varias reservas" << endl;
+        cout << "3. Mostrar reservas" << endl;
+        cout << "4. Buscar huespedes" << endl;
+        cout << "5. Actualizar noches" << endl;
+        cout << "6. Salida anticipada" << endl;
+        cout << "7. Ampliar reserva" << endl;
+        cout << "8. Generar codigos" << endl;
+        cout << "9. Buscar por apellido" << endl;
+        cout << "10. Corregir nombre" << endl;
+        cout << "11. Mostrar resumen" << endl;
+        cout << "12. Salir" << endl;
+
+        cout << "Elija una opcion: ";
+        cin >> opcion;
+
+        if (opcion == 1) {
+            registrarReserva(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 2) {
+            registrarVarias(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 3) {
+            mostrarReservas(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 4) {
+            buscarHuespedes(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 5) {
+            actualizarNoches(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 6) {
+            reducirNoches(habitaciones, noches, n);
+        }
+        else if (opcion == 7) {
+            ampliarReserva(nombres, habitaciones, noches, n);
+        }
+        else if (opcion == 8) {
+            generarCodigos(nombres, apellidos, habitaciones, n);
+        }
+        else if (opcion == 9) {
+            buscarPorApellido(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 10) {
+            corregirNombre(nombres, habitaciones, n);
+        }
+        else if (opcion == 11) {
+            mostrarResumen(nombres, apellidos, habitaciones, noches, n);
+        }
+        else if (opcion == 12) {
+            cout << "Programa finalizado" << endl;
+        }
+        else {
+            cout << "Opcion incorrecta" << endl;
+        }
+
+    } while (opcion != 12);
+
+    return 0;
+}
+
+// EJERCICIO 1
+void registrarReserva(string nombres[], string apellidos[], int habitaciones[], int noches[], int &n) {
+
+    string nombre, apellido;
+    int habitacion, noche;
+    int repetida = 0;
+
+    if (n < 20) {
+
+        cout << "Ingrese nombre: ";
+        cin >> nombre;
+
+        cout << "Ingrese apellido: ";
+        cin >> apellido;
+
+        cout << "Ingrese habitacion: ";
+        cin >> habitacion;
+
+        cout << "Ingrese noches: ";
+        cin >> noche;
+
+        if (nombre.empty() || apellido.empty() ||
+            nombre.length() < 3 || apellido.length() < 3 ||
+            habitacion <= 0 || noche <= 0) {
+
+            cout << "Datos incorrectos" << endl;
+
+        }
+        else {
+
+            for (int i = 0; i < n; i++) {
+                if (habitaciones[i] == habitacion) {
+                    repetida = 1;
+                }
+            }
+
+            if (repetida == 0) {
+
+                nombres[n] = nombre;
+                apellidos[n] = apellido;
+                habitaciones[n] = habitacion;
+                noches[n] = noche;
+
+                n++;
+
+                cout << "Reserva registrada correctamente" << endl;
+
+            }
+            else {
+                cout << "Habitacion ocupada" << endl;
+            }
+        }
+
+    }
+    else {
+        cout << "Hotel lleno" << endl;
+    }
+}
+
+// EJERCICIO 2
+void registrarVarias(string nombres[], string apellidos[], int habitaciones[], int noches[], int &n) {
+
+    int cantidad;
+
+    cout << "Cuantas reservas desea registrar: ";
+    cin >> cantidad;
+
+    if (cantidad > 0 && cantidad <= 20 - n) {
+
+        for (int i = 0; i < cantidad; i++) {
+
+            cout << endl;
+            cout << "Reserva numero " << i + 1 << endl;
+
+            registrarReserva(nombres, apellidos, habitaciones, noches, n);
+
+        }
+
+    }
+    else {
+        cout << "Cantidad incorrecta o no hay espacio" << endl;
+    }
+
+}
+
+// MOSTRAR RESERVAS
+void mostrarReservas(string nombres[], string apellidos[], int habitaciones[], int noches[], int n) {
+
+    if (n == 0) {
+        cout << "No hay reservas" << endl;
+    }
+
+    for (int i = 0; i < n; i++) {
+
+        cout << endl;
+        cout << "Nombre: " << nombres[i] << endl;
+        cout << "Apellido: " << apellidos[i] << endl;
+        cout << "Habitacion: " << habitaciones[i] << endl;
+        cout << "Noches: " << noches[i] << endl;
+
+    }
+
+}
+
+// EJERCICIO 3
+void buscarHuespedes(string nombres[], string apellidos[], int habitaciones[], int noches[], int n) {
+
+    string buscar;
+    int encontrado = 0;
+
+    cout << "Ingrese parte del nombre: ";
+    cin >> buscar;
+
+    for (int i = 0; i < n; i++) {
+
+        if (nombres[i].find(buscar) != string::npos) {
+
+            cout << nombres[i] << " ";
+            cout << apellidos[i] << " ";
+            cout << habitaciones[i] << " ";
+            cout << noches[i] << endl;
+
+            encontrado = 1;
+
+        }
+
+    }
+
+    if (encontrado == 0) {
+        cout << "No se encontraron huespedes" << endl;
+    }
+
+}
+
+// BUSCAR RESERVA
+int buscarReserva(int habitaciones[], int n, int habitacion) {
+
+    int posicion = -1;
+
+    for (int i = 0; i < n; i++) {
+
+        if (habitaciones[i] == habitacion) {
+            posicion = i;
+        }
+
+    }
+
+    return posicion;
+
+}
+
+// EJERCICIO 4
+void actualizarNoches(string nombres[], string apellidos[], int habitaciones[], int noches[], int n) {
+
+    int habitacion, nuevas;
+    string nombre, apellido;
+
+    cout << "Ingrese habitacion: ";
+    cin >> habitacion;
+
+    int pos = buscarReserva(habitaciones, n, habitacion);
+
+    if (pos != -1) {
+
+        cout << "Ingrese nombre: ";
+        cin >> nombre;
+
+        cout << "Ingrese apellido: ";
+        cin >> apellido;
+
+        if (nombres[pos].compare(nombre) == 0 &&
+            apellidos[pos].compare(apellido) == 0) {
+
+            cout << "Noches anteriores: " << noches[pos] << endl;
+
+            cout << "Ingrese nuevas noches: ";
+            cin >> nuevas;
+
+            if (nuevas > 0) {
+
+                noches[pos] = nuevas;
+
+                cout << "Noches actualizadas: " << noches[pos] << endl;
+
+            }
+            else {
+                cout << "Cantidad incorrecta" << endl;
+            }
+
+        }
+        else {
+            cout << "Nombre o apellido incorrecto" << endl;
+        }
+
+    }
+    else {
+        cout << "Reserva no encontrada" << endl;
+    }
+
+}
+
+// EJERCICIO 5
+void reducirNoches(int habitaciones[], int noches[], int n) {
+
+    int habitacion, reducir;
+
+    cout << "Ingrese habitacion: ";
+    cin >> habitacion;
+
+    int pos = buscarReserva(habitaciones, n, habitacion);
+
+    if (pos != -1) {
+
+        cout << "Noches actuales: " << noches[pos] << endl;
+
+        cout << "Cuantas noches desea reducir: ";
+        cin >> reducir;
+
+        if (reducir > 0 && reducir < noches[pos]) {
+
+            noches[pos] = noches[pos] - reducir;
+
+            cout << "Nuevas noches: " << noches[pos] << endl;
+
+        }
+        else {
+            cout << "Reduccion incorrecta" << endl;
+        }
+
+    }
+    else {
+        cout << "Reserva no encontrada" << endl;
+    }
+
+}
+
+// EJERCICIO 6
+void ampliarReserva(string nombres[], int habitaciones[], int noches[], int n) {
+
+    string nombre;
+    int habitacion, ampliar;
+    int pos = -1;
+
+    cout << "Ingrese nombre del huesped: ";
+    cin >> nombre;
+
+    cout << "Ingrese habitacion: ";
+    cin >> habitacion;
+
+    for (int i = 0; i < n; i++) {
+
+        if (nombres[i].find(nombre) != string::npos &&
+            habitaciones[i] == habitacion) {
+
+            pos = i;
+        }
+
+    }
+
+    if (pos != -1) {
+
+        cout << "Noches actuales: " << noches[pos] << endl;
+
+        cout << "Cuantas noches desea ampliar: ";
+        cin >> ampliar;
+
+        if (ampliar > 0) {
+
+            noches[pos] = noches[pos] + ampliar;
+
+            cout << "Nuevas noches: " << noches[pos] << endl;
+
+        }
+        else {
+            cout << "Cantidad incorrecta" << endl;
+        }
+
+    }
+    else {
+        cout << "Reserva no encontrada" << endl;
+    }
+
+}
+
+// EJERCICIO 7
+void generarCodigos(string nombres[], string apellidos[], int habitaciones[], int n) {
+
+    for (int i = 0; i < n; i++) {
+
+        if (nombres[i].length() >= 3 && apellidos[i].length() >= 3) {
+
+            string codigo = nombres[i].substr(0, 3) +
+                            apellidos[i].substr(0, 3) +
+                            to_string(habitaciones[i]);
+
+            cout << nombres[i] << " ";
+            cout << "Codigo: " << codigo << endl;
+
+        }
+
+    }
+
+}
+
+// EJERCICIO 8
+void buscarPorApellido(string nombres[], string apellidos[], int habitaciones[], int noches[], int n) {
+
+    string apellido;
+    int encontrado = 0;
+
+    cout << "Ingrese apellido: ";
+    cin >> apellido;
+
+    for (int i = 0; i < n; i++) {
+
+        if (apellidos[i].compare(apellido) == 0) {
+
+            cout << nombres[i] << " ";
+            cout << apellidos[i] << " ";
+            cout << habitaciones[i] << " ";
+            cout << noches[i] << endl;
+
+            encontrado = 1;
+
+        }
+
+    }
+
+    if (encontrado == 0) {
+        cout << "No hay reservas con ese apellido" << endl;
+    }
+
+}
+
+// EJERCICIO 9
+void corregirNombre(string nombres[], int habitaciones[], int n) {
+
+    int habitacion, opcion;
+    string buscar, reemplazar;
+
+    cout << "Ingrese habitacion: ";
+    cin >> habitacion;
+
+    int pos = buscarReserva(habitaciones, n, habitacion);
+
+    if (pos != -1) {
+
+        cout << "Nombre actual: " << nombres[pos] << endl;
+
+        cout << "1. Reemplazar una parte" << endl;
+        cout << "2. Agregar prefijo Sr-" << endl;
+        cout << "3. Quitar prefijo Sr-" << endl;
+
+        cout << "Elija una opcion: ";
+        cin >> opcion;
+
+        if (opcion == 1) {
+
+            cout << "Parte que desea cambiar: ";
+            cin >> buscar;
+
+            cout << "Nuevo texto: ";
+            cin >> reemplazar;
+
+            int lugar = nombres[pos].find(buscar);
+
+            if (lugar != string::npos) {
+
+                nombres[pos].replace(lugar, buscar.length(), reemplazar);
+
+                cout << "Nombre corregido: " << nombres[pos] << endl;
+
+            }
+            else {
+                cout << "Texto no encontrado" << endl;
+            }
+
+        }
+        else if (opcion == 2) {
+
+            if (nombres[pos].find("Sr-") != 0) {
+
+                nombres[pos].insert(0, "Sr-");
+
+                cout << "Nuevo nombre: " << nombres[pos] << endl;
+
+            }
+            else {
+                cout << "El prefijo ya existe" << endl;
+            }
+
+        }
+        else if (opcion == 3) {
+
+            if (nombres[pos].find("Sr-") == 0) {
+
+                nombres[pos].erase(0, 3);
+
+                cout << "Nuevo nombre: " << nombres[pos] << endl;
+
+            }
+            else {
+                cout << "No tiene prefijo" << endl;
+            }
+
+        }
+        else {
+            cout << "Opcion incorrecta" << endl;
+        }
+
+    }
+    else {
+        cout << "Reserva no encontrada" << endl;
+    }
+
+}
+
+// EJERCICIO 10
+void mostrarResumen(string nombres[], string apellidos[], int habitaciones[], int noches[], int n) {
+
+    int totalNoches = 0;
+    int mayor = 0;
+
+    if (n > 0) {
+
+        for (int i = 0; i < n; i++) {
+
+            totalNoches = totalNoches + noches[i];
+
+            if (noches[i] > noches[mayor]) {
+                mayor = i;
+            }
+
+        }
+
+        cout << "Total de reservas: " << n << endl;
+        cout << "Total de noches: " << totalNoches << endl;
+
+        cout << "Reserva de mayor duracion: " << endl;
+        cout << nombres[mayor] << " " << apellidos[mayor] << endl;
+        cout << "Habitacion: " << habitaciones[mayor] << endl;
+        cout << "Noches: " << noches[mayor] << endl;
+
+    }
+    else {
+        cout << "No hay reservas registradas" << endl;
+    }
+
+}
