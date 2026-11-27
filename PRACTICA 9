@@ -1,0 +1,341 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// PROTOTIPOS
+int leer();
+void registrar(string[], string[], int[], int&);
+void mostrar(string[], string[], int[], int);
+void buscar(string[], string[], int[], int);
+void vender(int[], int);
+void reponer(int[], int);
+void actualizar(int[], int);
+void codigos(string[], int);
+void alertas(string[], int[], int);
+void marca(string[], string[], int[], int);
+void corregir(string[], int);
+void resumen(string[], int[], int);
+
+// LEER ENTEROS
+int leer() {
+    int x;
+    cin >> x;
+
+    while (cin.fail()) {
+        cout << "Ingrese un numero valido: ";
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cin >> x;
+    }
+
+    cin.ignore(1000, '\n');
+    return x;
+}
+//ejercicio 1 y 2 
+void registrar(string p[], string m[], int c[], int &n) {
+    int cantidad, i = 0;
+
+    cout << "Cantidad de productos a registrar: ";
+    cantidad = leer();
+
+    while (i < cantidad && n < 20) {
+        string nombre, marca;
+        int stock;
+
+        cout << "Nombre: ";
+        getline(cin, nombre);
+
+        cout << "Marca: ";
+        getline(cin, marca);
+
+        if (nombre.length() < 3 || marca.length() < 3) {
+            cout << "Nombre o marca invalida.\n";
+        } else {
+            int repetido = 0;
+
+            for (int j = 0; j < n; j++) {
+                if (p[j].compare(nombre) == 0 &&
+                    m[j].compare(marca) == 0) {
+                    repetido = 1;
+                }
+            }
+            if (repetido == 0) {
+                cout << "Stock: ";
+                stock = leer();
+
+                if (stock >= 0) {
+                    p[n] = nombre;
+                    m[n] = marca;
+                    c[n] = stock;
+                    n++;
+                    cout << "Registrado.\n";
+                } else {
+                    cout << "Stock invalido.\n";
+                }
+            } else {
+                cout << "Producto repetido.\n";
+            }
+        }
+        i++;
+    }
+
+    if (n == 20)
+        cout << "Inventario lleno.\n";
+}
+
+// MOSTRAR PRODUCTOS
+void mostrar(string p[], string m[], int c[], int n) {
+    if (n == 0)
+        cout << "Inventario vacio.\n";
+
+    for (int i = 0; i < n; i++) {
+        cout << "\nPosicion: " << i
+             << "\nProducto: " << p[i]
+             << "\nMarca: " << m[i]
+             << "\nStock: " << c[i] << endl;
+    }
+}
+
+// EJERCICIO 3: BUSCAR PRODUCTO
+void buscar(string p[], string m[], int c[], int n) {
+    string nombre;
+    int encontrado = 0;
+
+    cout << "Nombre a buscar: ";
+    getline(cin, nombre);
+
+    for (int i = 0; i < n; i++) {
+        if (p[i].find(nombre) != string::npos) {
+            cout << p[i] << " - " << m[i]
+                 << " - Stock: " << c[i] << endl;
+            encontrado = 1;
+        }
+    }
+
+    if (encontrado == 0)
+        cout << "No encontrado.\n";
+}
+
+// EJERCICIO 4: ACTUALIZAR STOCK
+void actualizar(int c[], int n) {
+    int pos, nuevo;
+
+    cout << "Posicion: ";
+    pos = leer();
+
+    if (pos >= 0 && pos < n) {
+        cout << "Nuevo stock: ";
+        nuevo = leer();
+
+        if (nuevo >= 0) {
+            c[pos] = nuevo;
+            cout << "Stock actualizado.\n";
+        } else
+            cout << "Cantidad invalida.\n";
+    } else
+        cout << "Posicion invalida.\n";
+}
+
+// EJERCICIO 5: VENDER
+void vender(int c[], int n) {
+    int pos, cantidad;
+
+    cout << "Posicion: ";
+    pos = leer();
+
+    if (pos >= 0 && pos < n) {
+        cout << "Cantidad a vender: ";
+        cantidad = leer();
+
+        if (cantidad > 0 && cantidad <= c[pos]) {
+            c[pos] -= cantidad;
+            cout << "Venta realizada. Stock: "
+                 << c[pos] << endl;
+        } else
+            cout << "Stock insuficiente o cantidad invalida.\n";
+    } else
+        cout << "Posicion invalida.\n";
+}
+// EJERCICIO 6: REPONER
+void reponer(int c[], int n) {
+    int pos, cantidad;
+
+    cout << "Posicion: ";
+    pos = leer();
+
+    if (pos >= 0 && pos < n) {
+        cout << "Cantidad a reponer: ";
+        cantidad = leer();
+
+        if (cantidad > 0) {
+            c[pos] += cantidad;
+            cout << "Nuevo stock: " << c[pos] << endl;
+        } else
+            cout << "Cantidad invalida.\n";
+    } else
+        cout << "Posicion invalida.\n";
+}
+
+// EJERCICIO 7: CODIGOS Y ALERTAS
+void codigos(string p[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (p[i].length() >= 3)
+            cout << p[i] << " Codigo: "
+                 << p[i].substr(0, 3) << endl;
+    }
+}
+
+void alertas(string p[], int c[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (c[i] < 5)
+            cout << p[i] << " tiene stock bajo: "
+                 << c[i] << endl;
+    }
+}
+
+// EJERCICIO 8: BUSCAR POR MARCA
+void marca(string p[], string m[], int c[], int n) {
+    string buscada;
+    int encontrado = 0;
+
+    cout << "Marca: ";
+    getline(cin, buscada);
+
+    for (int i = 0; i < n; i++) {
+        if (m[i].compare(buscada) == 0) {
+            cout << p[i] << " - Stock: "
+                 << c[i] << endl;
+            encontrado = 1;
+        }
+    }
+
+    if (encontrado == 0)
+        cout << "Marca no encontrada.\n";
+}
+
+// EJERCICIO 9: MODIFICAR NOMBRE
+void corregir(string p[], int n) {
+    int pos, opcion;
+    string texto, nuevo;
+
+    cout << "Posicion: ";
+    pos = leer();
+
+    if (pos >= 0 && pos < n) {
+        cout << "1. Reemplazar texto\n";
+        cout << "2. Agregar PRO-\n";
+        cout << "3. Quitar PRO-\n";
+        opcion = leer();
+
+        if (opcion == 1) {
+            cout << "Texto a cambiar: ";
+            getline(cin, texto);
+            cout << "Nuevo texto: ";
+            getline(cin, nuevo);
+
+            if (!texto.empty()) {
+                size_t lugar = p[pos].find(texto);
+
+                if (lugar != string::npos)
+                    p[pos].replace(lugar, texto.length(), nuevo);
+                else
+                    cout << "Texto no encontrado.\n";
+            }
+        } else if (opcion == 2) {
+            if (p[pos].find("PRO-") != 0)
+                p[pos].insert(0, "PRO-");
+        } else if (opcion == 3) {
+            if (p[pos].find("PRO-") == 0)
+                p[pos].erase(0, 4);
+        } else {
+            cout << "Opcion invalida.\n";
+        }
+
+        cout << "Nombre: " << p[pos] << endl;
+    } else
+        cout << "Posicion invalida.\n";
+}
+
+// EJERCICIO 10: RESUMEN
+void resumen(string p[], int c[], int n) {
+    int total = 0, mayor = -1, pos = 0;
+    string texto;
+
+    for (int i = 0; i < n; i++) {
+        total += c[i];
+
+        if (c[i] > mayor) {
+            mayor = c[i];
+            pos = i;
+        }
+    }
+
+    if (n > 0) {
+        texto.append("RESUMEN DEL INVENTARIO");
+
+        cout << texto << endl;
+        cout << "Productos: " << n << endl;
+        cout << "Unidades: " << total << endl;
+        cout << "Mayor stock: " << p[pos]
+             << " - " << mayor << endl;
+        cout << "Longitud del nombre: "
+             << p[pos].size() << endl;
+    } else
+        cout << "Inventario vacio.\n";
+}
+
+// MAIN
+int main() {
+    string productos[20], marcas[20];
+    int cantidades[20];
+    int n = 0, op;
+
+    do {
+        cout << "\n===== INVENTARIO =====\n";
+        cout << "1. Registrar productos\n";
+        cout << "2. Mostrar productos\n";
+        cout << "3. Buscar producto\n";
+        cout << "4. Actualizar stock\n";
+        cout << "5. Vender\n";
+        cout << "6. Reponer\n";
+        cout << "7. Codigos y alertas\n";
+        cout << "8. Buscar por marca\n";
+        cout << "9. Corregir nombre\n";
+        cout << "10. Resumen\n";
+        cout << "0. Salir\n";
+        cout << "Opcion: ";
+
+        op = leer();
+
+        if (op == 1)
+            registrar(productos, marcas, cantidades, n);
+        else if (op == 2)
+            mostrar(productos, marcas, cantidades, n);
+        else if (op == 3)
+            buscar(productos, marcas, cantidades, n);
+        else if (op == 4)
+            actualizar(cantidades, n);
+        else if (op == 5)
+            vender(cantidades, n);
+        else if (op == 6)
+            reponer(cantidades, n);
+        else if (op == 7) {
+            codigos(productos, n);
+            alertas(productos, cantidades, n);
+        }
+        else if (op == 8)
+            marca(productos, marcas, cantidades, n);
+        else if (op == 9)
+            corregir(productos, n);
+        else if (op == 10)
+            resumen(productos, cantidades, n);
+        else if (op == 0)
+            cout << "Fin del programa.\n";
+        else
+            cout << "Opcion incorrecta.\n";
+
+    } while (op != 0);
+
+    return 0;
+}
+
